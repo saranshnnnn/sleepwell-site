@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23c9a24d%27/%3E%3Ctext x=%2732%27 y=%2745%27 font-size=%2738%27 text-anchor=%27middle%27 font-family=%27Georgia,serif%27 fill=%27%231c1a16%27%3ES%3C/text%3E%3C/svg%3E">
+<title>SleepWell Mattress & Furniture</title>
+<meta name="description" content="SleepWell Mattress & Furniture in Surrey, BC. Canadian-made mattresses, sofas, sectionals, custom beds, coffee tables, TV units and home furnishings. Family-owned.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: white and gold. Light hero with arched photo slot, gold band, five equal product cards (photo above, text below), tinted story, white visit block. */
+:root {
+  --bg: #ffffff;
+  --tint: #f8f3e6;
+  --tint-2: #fcf9f0;
+  --ink: #1c1a16;
+  --muted: #655f52;
+  --line: #e8e0cc;
+  --gold: #c9a24d;
+  --gold-text: #8a6a22;
+  --gold-ink: #1c1a16;
+  --open: #2e9b6a;
+  color-scheme: light;
+  --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-body: "Manrope", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12100c;
+    --tint: #1d1a13;
+    --tint-2: #17140e;
+    --ink: #f3eee2;
+    --muted: #aaa291;
+    --line: #2e2a20;
+    --gold: #d9b45f;
+    --gold-text: #e0c078;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12100c;
+  --tint: #1d1a13;
+  --tint-2: #17140e;
+  --ink: #f3eee2;
+  --muted: #aaa291;
+  --line: #2e2a20;
+  --gold: #d9b45f;
+  --gold-text: #e0c078;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; }
+img { max-width: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+}
+.gut { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.in { max-width: 1120px; margin: 0 auto; }
+a { color: inherit; }
+p { margin: 0; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: -0.015em; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--gold); color: var(--gold-ink); padding: 10px 16px; border-radius: 6px; font-weight: 600; z-index: 20; }
+.skip:focus { left: 16px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-text); }
+
+/* top bar */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); border-bottom: 1px solid var(--gold); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 11; background: var(--bg); }
+.bar .in { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 68px; }
+.brand { font-family: var(--font-display); font-size: 25px; letter-spacing: 0.01em; text-decoration: none; line-height: 1; }
+.brand em { font-style: italic; color: var(--gold-text); }
+.brand small { display: block; font-family: var(--font-body); font-size: 10px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+.nav { display: flex; align-items: center; gap: 28px; font-size: 14px; font-weight: 500; letter-spacing: 0.02em; }
+.nav a { text-decoration: none; }
+.nav a.hide:hover { color: var(--gold-text); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 28px; border-radius: 999px; font-weight: 600; font-size: 15px; letter-spacing: 0.03em; text-decoration: none; border: 1px solid transparent; cursor: pointer; }
+.btn.gold { background: var(--gold); color: var(--gold-ink); }
+.btn.gold:hover { filter: brightness(1.06); }
+.btn.line { border-color: var(--ink); color: var(--ink); }
+.btn.line:hover { border-color: var(--gold-text); color: var(--gold-text); }
+
+/* hero */
+.hero .in { padding-block: 88px 96px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 72px; align-items: center; }
+.hero h1 { font-size: clamp(42px, 6.6vw, 80px); line-height: 1.04; margin: 22px 0 26px; }
+.hero h1 em { font-style: italic; color: var(--gold-text); }
+.hero p.lead { font-size: 18px; max-width: 48ch; color: var(--muted); }
+.acts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+.callline { margin-top: 20px; font-size: 14px; color: var(--muted); }
+.callline b { color: var(--ink); font-weight: 600; user-select: all; }
+.arch { position: relative; aspect-ratio: 4 / 5; width: 100%; max-width: 420px; margin-inline: auto; border-radius: 999px 999px 14px 14px; border: 1px solid var(--gold); background: linear-gradient(165deg, var(--tint), var(--tint-2)); overflow: hidden; }
+.arch::after { content: ""; position: absolute; inset: 14px; border-radius: 999px 999px 6px 6px; border: 1px solid var(--line); pointer-events: none; }
+.arch img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* gold band */
+.facts { background: var(--gold); color: var(--gold-ink); }
+.facts ul { list-style: none; margin: 0; padding: 20px 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 32px; font-size: 12px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+.facts li { display: flex; align-items: center; gap: 12px; }
+.facts li::before { content: ""; width: 24px; height: 1px; background: var(--gold-ink); }
+
+.sec { padding-block: 104px; }
+.head { max-width: 640px; margin-bottom: 48px; }
+.head h2 { font-size: clamp(34px, 5vw, 56px); line-height: 1.05; margin-top: 16px; }
+.head p { color: var(--muted); margin-top: 16px; max-width: 52ch; }
+
+/* five equal cards */
+.grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px; }
+.card { grid-column: span 2; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
+.card:nth-child(4) { grid-column: 2 / span 2; }
+.card:nth-child(5) { grid-column: 4 / span 2; }
+.card { position: relative; }
+.cardlink { text-decoration: none; }
+.cardlink::after { content: ""; position: absolute; inset: 0; }
+.card:hover { border-color: var(--gold); }
+.shot { aspect-ratio: 4 / 3; background: linear-gradient(160deg, var(--tint), var(--tint-2)); border-bottom: 1px solid var(--line); position: relative; }
+.shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.card .txt { padding: 24px 24px 28px; }
+.card .rule { display: block; width: 28px; height: 2px; background: var(--gold); margin-bottom: 16px; }
+.card h3 { font-size: 26px; line-height: 1.12; }
+.card p { margin-top: 8px; font-size: 15px; color: var(--muted); }
+
+/* featured from the catalogue */
+.featured { padding-top: 0; }
+.fgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.fcard { position: relative; background: var(--bg); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
+.fcard:hover { border-color: var(--gold); }
+.fcard .shot img { width: 100%; height: 100%; object-fit: cover; display: block; position: absolute; inset: 0; }
+.fcard .txt { padding: 18px 20px 22px; }
+.fcard .cat { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-text); }
+.fcard h3 { font-size: 22px; line-height: 1.15; margin-top: 4px; }
+.fcard h3 a { text-decoration: none; }
+.fcard h3 a::after { content: ""; position: absolute; inset: 0; }
+.fcard .price { font-size: 15px; color: var(--muted); margin-top: 4px; display: block; }
+.fmore { margin-top: 32px; }
+@media (max-width: 860px) { .fgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } }
+@media (max-width: 520px) { .fgrid { grid-template-columns: 1fr; } }
+
+/* gallery */
+.gallery { padding-top: 0; }
+.gal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.gal figure { margin: 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4 / 3; background: var(--tint); }
+.gal img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* story */
+.story { background: var(--tint); border-block: 1px solid var(--line); }
+.story .in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 80px; align-items: start; }
+.story h2 { font-size: clamp(34px, 5vw, 56px); line-height: 1.05; margin-top: 16px; }
+.steps { display: grid; }
+.steps div { padding-block: 28px; border-top: 1px solid var(--gold); }
+.steps div:last-child { border-bottom: 1px solid var(--gold); }
+.steps h3 { font-size: 26px; }
+.steps p { margin-top: 8px; color: var(--muted); max-width: 46ch; }
+
+/* visit */
+.visit .in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 80px; align-items: start; }
+.visit h2 { font-size: clamp(34px, 5vw, 56px); line-height: 1.05; margin-top: 16px; }
+.addr { margin-top: 32px; font-family: var(--font-display); font-size: 28px; line-height: 1.3; }
+.status { display: inline-flex; align-items: center; gap: 10px; margin-top: 14px; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; }
+.status .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); }
+.status[data-open="true"] .dot { background: var(--open); box-shadow: 0 0 0 4px rgba(46,155,106,0.18); }
+.panel { border: 1px solid var(--gold); border-radius: 14px; padding: 8px 28px; background: var(--tint-2); }
+.hours-wrap { overflow-x: auto; min-width: 0; }
+.hours { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.hours td { padding: 15px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+.hours tr:last-child td { border-bottom: 0; }
+.hours td:last-child { text-align: right; color: var(--muted); }
+.hours tr.today td { color: var(--gold-text); font-weight: 700; }
+
+footer { border-top: 1px solid var(--line); padding-block: 32px 40px; font-size: 13px; color: var(--muted); }
+footer .in { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+footer em { font-family: var(--font-display); font-size: 16px; }
+
+@media (max-width: 860px) {
+  .nav a.hide { display: none; }
+  .hero .in { grid-template-columns: 1fr; gap: 48px; padding-block: 56px 64px; }
+  .arch { max-width: 320px; }
+  .story .in, .visit .in { grid-template-columns: 1fr; gap: 32px; }
+  .sec { padding-block: 64px; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card, .card:nth-child(4), .card:nth-child(5) { grid-column: auto; }
+  .card:nth-child(5) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 10px); }
+}
+@media (max-width: 860px) {
+  .gal { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+}
+@media (max-width: 520px) {
+  .grid { grid-template-columns: 1fr; }
+  .card:nth-child(5) { width: 100%; }
+  .facts ul { justify-content: flex-start; }
+  .acts .btn { width: 100%; }
+  .nav .btn { width: auto; min-height: 44px; padding: 0 20px; }
+  .panel { padding: 4px 20px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .btn { transition: filter .15s ease, color .15s ease, border-color .15s ease; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="bar gut">
+  <div class="in">
+    <a class="brand" href="#top">Sleep<em>Well</em><small>Mattress &amp; Furniture</small></a>
+    <nav class="nav" aria-label="Main">
+      <a class="hide" href="#range">What we sell</a>
+      <a class="hide" href="/catalogue">Catalogue</a>
+      <a class="hide" href="#story">Our story</a>
+      <a class="btn gold" href="#visit">Visit us</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero gut" id="top">
+    <div class="in">
+      <div>
+        <p class="eyebrow">Surrey, BC · Family-owned</p>
+        <h1>Mattresses, sofas, beds and more, <em>under one family roof.</em></h1>
+        <p class="lead">A family-run showroom in Surrey with Canadian-made mattresses, sofas, sectionals, custom beds, coffee tables, TV units and home furnishings, all at honest prices.</p>
+        <div class="acts">
+          <a class="btn gold" href="https://maps.google.com/maps?cid=14003707485349791927" target="_blank" rel="noopener">Get directions</a>
+          <a class="btn line" href="#range">See what we sell</a>
+        </div>
+        <p class="callline">Call the store: <b>(778) 680-4570</b></p>
+      </div>
+      <div class="arch"><img src="img/hero.jpg" width="900" height="1125" alt="A light grey sectional sofa with round gold and marble coffee tables in the SleepWell showroom"></div>
+    </div>
+  </section>
+
+  <div class="facts gut">
+    <div class="in">
+      <ul>
+        <li>Family-owned</li>
+        <li>Canadian-made mattresses</li>
+        <li>Honest pricing</li>
+        <li>Surrey, BC</li>
+      </ul>
+    </div>
+  </div>
+
+  <section class="sec gut" id="range">
+    <div class="in">
+      <div class="head">
+        <p class="eyebrow">What we sell</p>
+        <h2>Everything for a comfortable home.</h2>
+        <p>Whether it is your first home or a fresh look, you can see it all in one showroom.</p>
+      </div>
+      <div class="grid">
+        <article class="card"><div class="shot"><img src="img/mattresses.jpg" width="900" height="675" loading="lazy" alt="A mattress on a dark wood bed frame in the showroom"></div><div class="txt"><span class="rule"></span><h3><a class="cardlink" href="/catalogue?category=Mattresses+%26+beds">Mattresses</a></h3><p>Canadian-made in our own facility and sold factory-direct.</p></div></article>
+        <article class="card"><div class="shot"><img src="img/sofas.jpg" width="900" height="675" loading="lazy" alt="A beige fabric sectional sofa with a chaise"></div><div class="txt"><span class="rule"></span><h3><a class="cardlink" href="/catalogue?category=Sofas+%26+sectionals">Sofas &amp; sectionals</a></h3><p>A collection for every living room.</p></div></article>
+        <article class="card"><div class="shot"><img src="img/beds.jpg" width="900" height="675" loading="lazy" alt="A grey bed frame with a row of other beds behind it"></div><div class="txt"><span class="rule"></span><h3><a class="cardlink" href="/catalogue?category=Mattresses+%26+beds">Custom beds</a></h3><p>Made to suit your bedroom.</p></div></article>
+        <article class="card"><div class="shot"><img src="img/tv-units.jpg" width="900" height="675" loading="lazy" alt="A long cream and marble TV unit"></div><div class="txt"><span class="rule"></span><h3><a class="cardlink" href="/catalogue?category=TV+units">Coffee tables &amp; TV units</a></h3><p>The pieces that finish a living space.</p></div></article>
+        <article class="card"><div class="shot"><img src="img/furnishings.jpg" width="900" height="675" loading="lazy" alt="A gold and marble console table beside a TV unit"></div><div class="txt"><span class="rule"></span><h3><a class="cardlink" href="/catalogue?category=Console+%26+accent+tables">Home furnishings</a></h3><p>Pieces you'll love for years to come.</p></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec featured gut" id="featured" hidden>
+    <div class="in">
+      <div class="head">
+        <p class="eyebrow">From the catalogue</p>
+        <h2>A few pieces to start with.</h2>
+      </div>
+      <div class="fgrid" id="fgrid"></div>
+      <p class="fmore"><a class="btn gold" href="/catalogue">Browse the full catalogue</a></p>
+    </div>
+  </section>
+
+  <section class="sec gallery gut" id="gallery">
+    <div class="in">
+      <div class="head">
+        <p class="eyebrow">Inside the showroom</p>
+        <h2>Take a look around.</h2>
+      </div>
+      <div class="gal">
+        <figure><img src="img/showroom-floor.jpg" width="800" height="600" loading="lazy" alt="The showroom floor with sofas, coffee tables and beds"></figure>
+        <figure><img src="img/chesterfield.jpg" width="800" height="600" loading="lazy" alt="A black tufted sofa set with two armchairs"></figure>
+        <figure><img src="img/recliners.jpg" width="800" height="600" loading="lazy" alt="A brown leather-look recliner set"></figure>
+        <figure><img src="img/curved-sofa.jpg" width="800" height="600" loading="lazy" alt="A pale grey curved sofa with pleated sides"></figure>
+        <figure><img src="img/dressers.jpg" width="800" height="600" loading="lazy" alt="Two dark wood dressers with mirrors"></figure>
+        <figure><img src="img/white-sectional.jpg" width="800" height="600" loading="lazy" alt="A white sectional sofa with a chaise"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec story gut" id="story">
+    <div class="in">
+      <div><p class="eyebrow">Our story</p><h2>A family business, start to finish.</h2></div>
+      <div class="steps">
+        <div><h3>One showroom, the whole home</h3><p>From the mattress to the sofa to the coffee table, find it all in one place.</p></div>
+        <div><h3>Honest pricing</h3><p>Our mattresses are made in our own facility and sold factory-direct, and the same honest approach runs through everything we sell.</p></div>
+        <div><h3>Treated like family</h3><p>Personal service from people who want you to love what you take home.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec visit gut" id="visit">
+    <div class="in">
+      <div>
+        <p class="eyebrow">Visit the showroom</p>
+        <h2>Come and see it in person.</h2>
+        <p class="addr">12950 80 Ave, Unit 1<br>Surrey, BC V3W 3B2</p>
+        <p class="status" id="status" data-open="false"><span class="dot"></span><span id="statusText">Surrey, BC</span></p>
+        <p class="callline">Phone: <b>(778) 680-4570</b></p>
+        <div class="acts">
+          <a class="btn gold" href="https://maps.google.com/maps?cid=14003707485349791927" target="_blank" rel="noopener">Open in Google Maps</a>
+          <a class="btn line" href="https://search.google.com/local/writereview?placeid=ChIJx8aXjKXZhVQRt8jAWsMpV8I" target="_blank" rel="noopener">Leave a review</a>
+        </div>
+      </div>
+      <div class="hours-wrap panel">
+        <table class="hours" aria-label="Opening hours">
+          <tbody id="hours">
+            <tr data-d="1"><td>Monday</td><td>10:00 am – 7:00 pm</td></tr>
+            <tr data-d="2"><td>Tuesday</td><td>10:00 am – 7:00 pm</td></tr>
+            <tr data-d="3"><td>Wednesday</td><td>10:00 am – 7:00 pm</td></tr>
+            <tr data-d="4"><td>Thursday</td><td>10:00 am – 7:00 pm</td></tr>
+            <tr data-d="5"><td>Friday</td><td>10:00 am – 7:00 pm</td></tr>
+            <tr data-d="6"><td>Saturday</td><td>10:00 am – 7:00 pm</td></tr>
+            <tr data-d="0"><td>Sunday</td><td>10:00 am – 5:00 pm</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="gut">
+  <div class="in"><span>SleepWell Mattress &amp; Furniture · <a href="/catalogue">Catalogue</a></span><em>From our family to your home</em></div>
+</footer>
+
+<script>
+(function () {
+  try {
+    fetch("/api/products?featured=1").then(function (r) { return r.json(); }).then(function (list) {
+      if (!list || !list.length) return;
+      var grid = document.getElementById("fgrid");
+      list.slice(0, 6).forEach(function (p) {
+        var c = document.createElement("article"); c.className = "fcard";
+        var shot = document.createElement("div"); shot.className = "shot";
+        var img = document.createElement("img"); img.src = p.image; img.alt = p.name; img.loading = "lazy"; img.width = 1100; img.height = 825; shot.appendChild(img);
+        var txt = document.createElement("div"); txt.className = "txt";
+        var cat = document.createElement("span"); cat.className = "cat"; cat.textContent = p.category;
+        var h = document.createElement("h3"), a = document.createElement("a"); a.href = "/catalogue#" + p.id; a.textContent = p.name; h.appendChild(a);
+        var pr = document.createElement("span"); pr.className = "price"; pr.textContent = p.price ? p.price : "Ask in store for pricing";
+        txt.appendChild(cat); txt.appendChild(h); txt.appendChild(pr);
+        c.appendChild(shot); c.appendChild(txt); grid.appendChild(c);
+      });
+      document.getElementById("featured").hidden = false;
+    }).catch(function () {});
+  } catch (e) {}
+})();
+(function () {
+  try {
+    var parts = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Vancouver", weekday: "short", hour: "numeric", minute: "numeric", hour12: false }).formatToParts(new Date());
+    var get = function (t) { return parts.filter(function (p) { return p.type === t; })[0].value; };
+    var map = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+    var day = map[get("weekday")];
+    var mins = (parseInt(get("hour"), 10) % 24) * 60 + parseInt(get("minute"), 10);
+    var open = mins >= 600 && mins < (day === 0 ? 1020 : 1140);
+    var row = document.querySelector('#hours tr[data-d="' + day + '"]');
+    if (row) row.classList.add("today");
+    var s = document.getElementById("status");
+    s.setAttribute("data-open", open ? "true" : "false");
+    document.getElementById("statusText").textContent = open ? "Open now, until " + (day === 0 ? "5 pm" : "7 pm") : "Closed right now";
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>

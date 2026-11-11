@@ -1,0 +1,17 @@
+{
+  "name": "sleepwell-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SleepWell Mattress & Furniture website with a live catalogue and admin page",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "multer": "^2.0.2"
+  }
+}

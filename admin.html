@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23c9a24d%27/%3E%3Ctext x=%2732%27 y=%2745%27 font-size=%2738%27 text-anchor=%27middle%27 font-family=%27Georgia,serif%27 fill=%27%231c1a16%27%3ES%3C/text%3E%3C/svg%3E">
+<title>Manage catalogue | SleepWell</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/css/site.css">
+<style>
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 40px 24px; }
+.login { max-width: 420px; margin: 64px auto; display: grid; gap: 16px; }
+label.f { display: grid; gap: 6px; font-size: 14px; font-weight: 600; }
+.in-text, .in-area, .in-sel { width: 100%; min-height: 48px; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--tint-2); color: var(--ink); font: inherit; font-size: 16px; }
+.in-area { min-height: 96px; resize: vertical; }
+.msg { font-size: 14px; min-height: 1.4em; }
+.msg.err { color: var(--danger); }
+.msg.ok { color: var(--open); }
+.toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.toolbar h1 { font-size: 34px; }
+.rows { display: grid; gap: 10px; }
+.row { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 14px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 10px; background: var(--bg); }
+.row img { width: 72px; height: 54px; object-fit: cover; border-radius: 8px; display: block; background: var(--tint); }
+.row .t { min-width: 0; }
+.row .t b { display: block; font-weight: 600; overflow-wrap: anywhere; }
+.row .t span { font-size: 13px; color: var(--muted); }
+.row .a { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--tint); color: var(--gold-text); margin-left: 6px; }
+.tag.off { background: var(--ink); color: var(--bg); }
+form.edit { display: grid; gap: 14px; padding: 28px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.checks { display: flex; gap: 24px; flex-wrap: wrap; font-size: 15px; font-weight: 500; }
+.checks label { display: flex; align-items: center; gap: 8px; min-height: 40px; }
+.checks input { width: 20px; height: 20px; accent-color: var(--gold-text); }
+.preview { width: 100%; max-height: 220px; object-fit: contain; border-radius: 10px; background: var(--tint); display: none; }
+.preview.on { display: block; }
+.formacts { display: flex; gap: 10px; flex-wrap: wrap; }
+.confirm { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 14px; }
+dialog.ed { max-width: min(640px, calc(100vw - 24px)); width: 100%; }
+@media (max-width: 600px) {
+  .row { grid-template-columns: 64px minmax(0, 1fr); }
+  .row .a { grid-column: 1 / -1; justify-content: flex-start; }
+  .two { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header class="bar gut">
+  <div class="in">
+    <a class="brand" href="/">Sleep<em>Well</em><small>Manage catalogue</small></a>
+    <nav class="nav" aria-label="Main">
+      <a class="hide" href="/catalogue">View catalogue</a>
+      <button class="btn line small" id="logout" type="button" hidden>Sign out</button>
+    </nav>
+  </div>
+</header>
+
+<main class="gut"><div class="wrap">
+
+  <section id="loginView" class="login" hidden>
+    <h1>Sign in</h1>
+    <p id="loginNote" style="color:var(--muted)">Enter the admin password to add, change or remove products.</p>
+    <form id="loginForm" style="display:grid;gap:16px">
+      <label class="f" for="pw">Password<input class="in-text" id="pw" type="password" autocomplete="current-password" required></label>
+      <button class="btn gold" type="submit">Sign in</button>
+      <p class="msg" id="loginMsg" role="alert"></p>
+    </form>
+  </section>
+
+  <section id="appView" hidden>
+    <div class="toolbar">
+      <h1>Products</h1>
+      <button class="btn gold" id="addBtn" type="button">Add a product</button>
+    </div>
+    <p class="msg" id="listMsg" role="status"></p>
+    <div class="rows" id="rows"></div>
+  </section>
+
+</div></main>
+
+<dialog class="ed" id="edDlg" aria-labelledby="edTitle">
+  <form class="edit" id="edForm">
+    <h2 id="edTitle">Add a product</h2>
+    <label class="f" for="fName">Name<input class="in-text" id="fName" maxlength="120" required></label>
+    <div class="two">
+      <label class="f" for="fCat">Category<input class="in-text" id="fCat" maxlength="60" list="catList" required></label>
+      <label class="f" for="fPrice">Price (optional)<input class="in-text" id="fPrice" maxlength="40" placeholder="Leave empty to show 'Ask in store'"></label>
+    </div>
+    <datalist id="catList"></datalist>
+    <label class="f" for="fDesc">Description<textarea class="in-area" id="fDesc" maxlength="600"></textarea></label>
+    <label class="f" for="fImg">Photo<input class="in-text" id="fImg" type="file" accept="image/jpeg,image/png,image/webp"></label>
+    <img class="preview" id="preview" alt="Photo preview">
+    <div class="checks">
+      <label><input type="checkbox" id="fStock" checked> In stock</label>
+      <label><input type="checkbox" id="fFeat"> Show on the home page</label>
+    </div>
+    <p class="msg" id="edMsg" role="alert"></p>
+    <div class="formacts">
+      <button class="btn gold" type="submit" id="saveBtn">Save</button>
+      <button class="btn line" type="button" id="cancelBtn">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var products = [], editing = null, newFile = null;
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function api(url, opts) {
+    return fetch(url, Object.assign({ credentials: "same-origin" }, opts || {})).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok) { var e = new Error(j.error || "Something went wrong."); e.status = r.status; throw e; }
+        return j;
+      });
+    });
+  }
+  function show(signedIn) {
+    $("loginView").hidden = signedIn; $("appView").hidden = !signedIn; $("logout").hidden = !signedIn;
+  }
+
+  /* resize photo in the browser before upload */
+  function shrink(file) {
+    return new Promise(function (resolve) {
+      if (!/^image\/(jpeg|png|webp)$/.test(file.type)) return resolve(file);
+      var url = URL.createObjectURL(file), img = new Image();
+      img.onload = function () {
+        var max = 1400, s = Math.min(1, max / Math.max(img.width, img.height));
+        var c = document.createElement("canvas"); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        c.toBlob(function (b) { resolve(b ? new File([b], "photo.jpg", { type: "image/jpeg" }) : file); }, "image/jpeg", 0.82);
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); resolve(file); };
+      img.src = url;
+    });
+  }
+
+  function renderRows() {
+    var box = $("rows"); box.textContent = "";
+    var cats = {}; products.forEach(function (p) { cats[p.category] = 1; });
+    var dl = $("catList"); dl.textContent = "";
+    Object.keys(cats).sort().forEach(function (c) { var o = document.createElement("option"); o.value = c; dl.appendChild(o); });
+    $("listMsg").textContent = products.length + " products";
+    products.forEach(function (p) {
+      var row = el("div", "row");
+      var img = document.createElement("img"); img.src = p.image; img.alt = ""; row.appendChild(img);
+      var t = el("div", "t"); var b = el("b", "", p.name);
+      if (p.featured) b.appendChild(el("span", "tag", "Home page"));
+      if (!p.inStock) b.appendChild(el("span", "tag off", "Out of stock"));
+      t.appendChild(b); t.appendChild(el("span", "", p.category + " · " + (p.price || "Ask in store"))); row.appendChild(t);
+      var a = el("div", "a");
+      var eb = el("button", "btn line small", "Edit"); eb.type = "button"; eb.addEventListener("click", function () { openEditor(p); }); a.appendChild(eb);
+      var db = el("button", "btn danger small", "Delete"); db.type = "button";
+      db.addEventListener("click", function () {
+        a.textContent = "";
+        var c = el("div", "confirm"); c.appendChild(el("span", "", "Delete this product?"));
+        var y = el("button", "btn danger small", "Yes, delete"); y.type = "button";
+        y.addEventListener("click", function () {
+          api("/api/admin/products/" + p.id, { method: "DELETE" }).then(load).catch(function (e) { $("listMsg").textContent = e.message; });
+        });
+        var n = el("button", "btn line small", "Keep"); n.type = "button"; n.addEventListener("click", renderRows);
+        c.appendChild(y); c.appendChild(n); a.appendChild(c);
+      });
+      a.appendChild(db); row.appendChild(a); box.appendChild(row);
+    });
+  }
+
+  function load() {
+    return api("/api/admin/products").then(function (list) { products = list; renderRows(); }).catch(function (e) {
+      if (e.status === 401) show(false); else $("listMsg").textContent = e.message;
+    });
+  }
+
+  function openEditor(p) {
+    editing = p || null; newFile = null;
+    $("edTitle").textContent = p ? "Edit product" : "Add a product";
+    $("fName").value = p ? p.name : ""; $("fCat").value = p ? p.category : ""; $("fPrice").value = p && p.price ? p.price : "";
+    $("fDesc").value = p ? p.description : ""; $("fStock").checked = p ? p.inStock : true; $("fFeat").checked = p ? p.featured : false;
+    $("fImg").value = ""; $("edMsg").textContent = ""; $("edMsg").className = "msg";
+    var pv = $("preview"); if (p) { pv.src = p.image; pv.classList.add("on"); } else { pv.removeAttribute("src"); pv.classList.remove("on"); }
+    $("edDlg").showModal(); $("fName").focus();
+  }
+
+  $("addBtn").addEventListener("click", function () { openEditor(null); });
+  $("cancelBtn").addEventListener("click", function () { $("edDlg").close(); });
+  $("fImg").addEventListener("change", function () {
+    var f = this.files && this.files[0]; if (!f) return;
+    shrink(f).then(function (small) { newFile = small; var pv = $("preview"); pv.src = URL.createObjectURL(small); pv.classList.add("on"); });
+  });
+  $("edForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var msg = $("edMsg"); msg.className = "msg"; msg.textContent = "";
+    if (!editing && !newFile) { msg.className = "msg err"; msg.textContent = "Please add a photo."; return; }
+    var fd = new FormData();
+    fd.append("name", $("fName").value); fd.append("category", $("fCat").value); fd.append("price", $("fPrice").value);
+    fd.append("description", $("fDesc").value); fd.append("inStock", $("fStock").checked); fd.append("featured", $("fFeat").checked);
+    if (newFile) fd.append("image", newFile, "photo.jpg");
+    $("saveBtn").disabled = true;
+    api(editing ? "/api/admin/products/" + editing.id : "/api/admin/products", { method: editing ? "PUT" : "POST", body: fd })
+      .then(function () { $("edDlg").close(); return load(); })
+      .catch(function (err) { msg.className = "msg err"; msg.textContent = err.message; })
+      .then(function () { $("saveBtn").disabled = false; });
+  });
+
+  $("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault(); var m = $("loginMsg"); m.className = "msg"; m.textContent = "";
+    api("/api/admin/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ password: $("pw").value }) })
+      .then(function () { $("pw").value = ""; show(true); return load(); })
+      .catch(function (err) { m.className = "msg err"; m.textContent = err.message; });
+  });
+  $("logout").addEventListener("click", function () { api("/api/admin/logout", { method: "POST" }).then(function () { show(false); }); });
+
+  api("/api/admin/me").then(function (me) {
+    if (!me.adminEnabled) { $("loginNote").textContent = "The admin page is switched off. Set the ADMIN_PASSWORD setting on the server to turn it on."; $("loginForm").hidden = true; }
+    show(me.signedIn); if (me.signedIn) load();
+  });
+})();
+</script>
+</body>
+</html>

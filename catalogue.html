@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2714%27 fill=%27%23c9a24d%27/%3E%3Ctext x=%2732%27 y=%2745%27 font-size=%2738%27 text-anchor=%27middle%27 font-family=%27Georgia,serif%27 fill=%27%231c1a16%27%3ES%3C/text%3E%3C/svg%3E">
+<title>Catalogue | SleepWell Mattress & Furniture</title>
+<meta name="description" content="Browse mattresses, beds, sofas, sectionals, recliners, coffee tables, TV units and accent tables at SleepWell Mattress & Furniture in Surrey, BC.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Manrope:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="bar gut">
+  <div class="in">
+    <a class="brand" href="/">Sleep<em>Well</em><small>Mattress &amp; Furniture</small></a>
+    <nav class="nav" aria-label="Main">
+      <a class="hide" href="/">Home</a>
+      <a class="hide" href="/catalogue" aria-current="page">Catalogue</a>
+      <a class="btn gold" href="/#visit">Visit us</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="gut">
+  <div class="in">
+    <div class="pagehead">
+      <p class="eyebrow">Catalogue</p>
+      <h1>See what is in the showroom.</h1>
+      <p>Browse by category or search. Ask our team about sizes, fabrics, colours and availability, or come and try them in person.</p>
+    </div>
+
+    <div class="controls">
+      <label for="q" class="eyebrow">Search</label>
+      <input id="q" class="search" type="search" placeholder="Search sofas, beds, TV units..." autocomplete="off">
+      <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+    </div>
+
+    <p class="count" id="count" aria-live="polite"></p>
+    <div class="pgrid" id="grid"></div>
+    <p class="empty" id="empty" hidden>Nothing matches that search. Try another word or choose All.</p>
+  </div>
+</main>
+
+<footer class="gut">
+  <div class="in"><span>SleepWell Mattress &amp; Furniture · 12950 80 Ave, Unit 1, Surrey, BC · (778) 680-4570</span><em>From our family to your home</em></div>
+</footer>
+
+<dialog id="dlg" aria-labelledby="dlgTitle">
+  <button class="close" id="dlgClose" aria-label="Close">&times;</button>
+  <div class="dlg">
+    <div class="pic"><img id="dlgImg" alt=""></div>
+    <div class="info">
+      <p class="eyebrow" id="dlgCat"></p>
+      <h2 id="dlgTitle"></h2>
+      <p class="price" id="dlgPrice"></p>
+      <p class="desc" id="dlgDesc"></p>
+      <div class="acts">
+        <a class="btn gold" id="dlgCall" href="tel:+17786804570">Call the store</a>
+        <a class="btn line" href="https://maps.google.com/maps?cid=14003707485349791927" target="_blank" rel="noopener">Get directions</a>
+        <p class="phone">Phone: <b>(778) 680-4570</b> · Mon–Sat 10 am–7 pm, Sun 10 am–5 pm</p>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  var grid = document.getElementById("grid"), chips = document.getElementById("chips");
+  var q = document.getElementById("q"), count = document.getElementById("count"), empty = document.getElementById("empty");
+  var dlg = document.getElementById("dlg");
+  var all = [], cats = [], current = "", timer = null, lastFocus = null;
+  var params = new URLSearchParams(location.search);
+  current = params.get("category") || "";
+  q.value = params.get("q") || "";
+
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  function card(p) {
+    var b = el("button", "pcard"); b.type = "button"; b.setAttribute("data-id", p.id);
+    var shot = el("div", "shot");
+    if (!p.inStock) shot.appendChild(el("span", "badge", "Out of stock"));
+    var img = document.createElement("img"); img.src = p.image; img.alt = p.name; img.loading = "lazy"; img.width = 1100; img.height = 825;
+    shot.appendChild(img); b.appendChild(shot);
+    var txt = el("div", "txt");
+    txt.appendChild(el("span", "cat", p.category));
+    txt.appendChild(el("h3", "", p.name));
+    txt.appendChild(el("span", "price", p.price ? p.price : "Ask in store for pricing"));
+    b.appendChild(txt);
+    b.addEventListener("click", function () { openProduct(p, b); });
+    return b;
+  }
+
+  function render(list) {
+    grid.textContent = "";
+    list.forEach(function (p) { grid.appendChild(card(p)); });
+    empty.hidden = list.length > 0;
+    count.textContent = list.length + (list.length === 1 ? " item" : " items") + (current ? " in " + current : "");
+  }
+
+  function renderChips() {
+    chips.textContent = "";
+    function chip(label, value, n) {
+      var b = el("button", "chip"); b.type = "button"; b.setAttribute("aria-pressed", String(current === value));
+      b.appendChild(document.createTextNode(label));
+      if (n != null) b.appendChild(el("span", "", String(n)));
+      b.addEventListener("click", function () { current = value; renderChips(); load(); sync(); });
+      chips.appendChild(b);
+    }
+    chip("All", "", all.length ? null : null);
+    cats.forEach(function (c) { chip(c.name, c.name, c.count); });
+  }
+
+  function sync() {
+    var p = new URLSearchParams();
+    if (current) p.set("category", current);
+    if (q.value.trim()) p.set("q", q.value.trim());
+    var s = p.toString();
+    history.replaceState(null, "", location.pathname + (s ? "?" + s : "") + location.hash);
+  }
+
+  function load() {
+    var url = "/api/products?category=" + encodeURIComponent(current) + "&q=" + encodeURIComponent(q.value.trim());
+    return fetch(url).then(function (r) { return r.json(); }).then(function (list) {
+      render(list);
+      return list;
+    }).catch(function () { count.textContent = "The catalogue could not load. Please refresh the page."; });
+  }
+
+  function openProduct(p, trigger) {
+    lastFocus = trigger || null;
+    document.getElementById("dlgImg").src = p.image;
+    document.getElementById("dlgImg").alt = p.name;
+    document.getElementById("dlgCat").textContent = p.category;
+    document.getElementById("dlgTitle").textContent = p.name;
+    document.getElementById("dlgPrice").textContent = p.price ? p.price : "Ask in store for pricing";
+    document.getElementById("dlgDesc").textContent = (p.inStock ? "" : "Currently out of stock. Call us about when it is coming back. ") + (p.description || "");
+    if (!dlg.open) dlg.showModal();
+    history.replaceState(null, "", location.pathname + location.search + "#" + p.id);
+  }
+  function closeDlg() { if (dlg.open) dlg.close(); }
+  dlg.addEventListener("close", function () {
+    history.replaceState(null, "", location.pathname + location.search);
+    if (lastFocus) lastFocus.focus();
+  });
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) closeDlg(); });
+  document.getElementById("dlgClose").addEventListener("click", closeDlg);
+
+  q.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(function () { load(); sync(); }, 180); });
+
+  fetch("/api/categories").then(function (r) { return r.json(); }).then(function (c) { cats = c; renderChips(); }).catch(function () { renderChips(); });
+  function openFromHash() {
+    var id = location.hash.slice(1);
+    if (!id) return;
+    fetch("/api/products").then(function (r) { return r.json(); }).then(function (list) {
+      var hit = list.filter(function (p) { return p.id === id; })[0];
+      if (hit && !(dlg.open && document.getElementById("dlgTitle").textContent === hit.name)) openProduct(hit);
+    }).catch(function () {});
+  }
+  window.addEventListener("hashchange", openFromHash);
+  load().then(openFromHash);
+})();
+</script>
+</body>
+</html>
